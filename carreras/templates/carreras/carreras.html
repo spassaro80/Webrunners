@@ -1,0 +1,36 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}    Club de Runners | Carreras    {% endblock %} 
+
+{% block subtitle %} Carreras                {%endblock%}
+    
+
+  <!-- Cabecera -->
+
+{% block bigphoto %} url('{% static 'core/img/IMG_20181121_134423-03.jpeg' %}')    {%endblock%}
+
+
+<!-- Pié de página -->
+
+{%block content %}
+
+{% for cursa in cursas %}
+<div class="container">
+    <div class="row">  
+		<div class="col-lg-3 col-md-4 offset-lg-1">
+			<img class="img-fluid" src="{{cursa.image.url}}" alt="">
+	    	</div> 
+		<div class="col-lg-7 col-md-8">
+	    	<h2 class="section-heading title">{{cursa.name}}</h2>
+			<h3 >{{cursa.date |date:"d M, Y"}}</h3>   
+	    	<p>{{cursa.description}}</p>
+			<p><a href= "{% url 'resultados' cursa.id %}" class="link">Resultados</a> </p>
+        	</div>
+		</div> 
+	</div>
+{% endfor %}
+
+{% endblock %} 
+
+

@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}    Club de Runners | Clasificación General    {% endblock %} 
+
+{% block subtitle %} Clasificación General                      {%endblock%}
+    
+
+  <!-- Cabecera -->
+
+{% block bigphoto %} url('{% static 'core/img/IMG_20181121_134423-03.jpeg' %}')    {%endblock%}
+
+
+{% block content %}
+
+<!-- Mensaje si se acaba de actualizar la posición correctamente -->
+
+{% if 'registered' in request.GET %}
+<div class="alert alert-success" role="alert">
+Posición actualizada correctamente. <b>Ya puedes ver tu nueva posición en la clasificación</b>
+</div>
+{% endif %}
+    <!-- Pié de página -->
+    <footer>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+<table class="table">
+  <thead class="text-white bg-info">
+    <tr>
+      <th scope="col">Posición</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Apellido</th>
+      <th scope="col">Equipo</th>
+      <th scope="col">Puntos</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in resultados %}
+    {% if item.tot_score is not None %}
+    <tr bgcolor="{{item.team.color}}" {% if item.team.color == "black" or item.team.color == "red" %} style=color:white {% endif %}>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{item.name}}</td>
+      <td>{{item.surname}}</td>
+      <td>{{item.team}}</td>
+      <td>{{item.tot_score}}</td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+
+  </tbody>
+</table>
+       <p class="copyright text-muted">Copyright &copy; 2019 · Stefano </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+
+{% endblock %} 
+
+

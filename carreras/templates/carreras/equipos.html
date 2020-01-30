@@ -1,0 +1,50 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}    Club de Runners | Clasificación por Equipos    {% endblock %} 
+
+{% block subtitle %} Clasificación por Equipo                      {%endblock%}
+    
+
+  <!-- Cabecera -->
+
+{% block bigphoto %} url('{% static 'core/img/IMG_20181121_134423-03.jpeg' %}')    {%endblock%}
+
+
+{% block content %}
+    <!-- Pié de página -->
+    <footer>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+<table class="table">
+  <thead class="text-white bg-info">
+    <tr>
+      <th scope="col">Posición</th>
+      <th scope="col">Equipo</th>
+      <th scope="col">Puntos</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in resultados_equipos %}
+    {% if item.tot_score is not None %}
+    <tr bgcolor="{{item.color}}" {% if item.color == "black" or item.color == "red" %} style=color:white {% endif %}>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{item.name}}</td>
+      <td>{{item.tot_score}}</td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+
+  </tbody>
+</table>
+       <p class="copyright text-muted">Copyright &copy; 2019 · Stefano </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+
+{% endblock %} 
+
+

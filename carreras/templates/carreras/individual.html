@@ -1,0 +1,52 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}    Club de Runners | Clasificación Individual    {% endblock %} 
+
+{% block subtitle %} Clasificación Individual                      {%endblock%}
+    
+
+  <!-- Cabecera -->
+
+{% block bigphoto %} url('{{datos_carreras.image.url}}')    {%endblock%}
+
+
+{% block content %}
+    <!-- Pié de página -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+<table class="table">
+  <thead class="text-white bg-info">
+    <tr>
+      <th scope="col">Posición</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Apellido</th>
+      <th scope="col">Equipo</th>
+      <th scope="col">Puntos</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in resultados %}
+    <tr bgcolor="{{item.runners.team.color}}" {% if item.runners.team.color == "black" or item.runners.team.color == "red" %} style=color:white {% endif %}>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{item.runners.name}}</td>
+      <td>{{item.runners.surname}}</td>
+      <td>{{item.runners.team}}</td>
+      <td>{{item.score}}</td>
+    </tr>
+        {% endfor %}
+
+  </tbody>
+</table>
+       <p class="copyright text-muted">Copyright &copy; 2019 · Stefano </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+
+{% endblock %} 
+
+

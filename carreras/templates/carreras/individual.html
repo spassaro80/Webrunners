@@ -30,7 +30,7 @@
   <tbody>
     {% for item in resultados %}
     <tr bgcolor="{{item.runners.team.color}}" {% if item.runners.team.color == "black" or item.runners.team.color == "red" %} style=color:white {% endif %}>
-      <th scope="row">{{forloop.counter}}</th>
+      <th scope="row">{{item.number}}</th>
       <td>{{item.runners.name}}</td>
       <td>{{item.runners.surname}}</td>
       <td>{{item.runners.team}}</td>

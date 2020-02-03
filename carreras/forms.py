@@ -4,17 +4,17 @@ from django import forms
 class formResult(forms.ModelForm):
     class Meta:
         model = individual
-        fields = ['name', 'number', 'runners']
+        fields = ['name', 'number']#, 'runners']
         widgets= {
             'name' : forms.Select(attrs={'class' : 'form-control', 'placeholder': 'Indicar la carrera'}),
             'number' : forms.NumberInput(attrs={'class' : 'form-control', 'placeholder': 'Indicar la posición'}),
-            'runners' : forms.Select(attrs={'class' : 'form-control'}),
+            # 'runners' : forms.Select(attrs={'class' : 'form-control'}),
 
         }
         labels= {
             'name' : "Carrera",
             'number' : "Posición",
-            'runners' : "Runner",            
+            # 'runners' : "Runner",            
         }
     
     # El Valor inicial del campo Carrera en el form es la carrera que está activa
@@ -26,7 +26,7 @@ class formResult(forms.ModelForm):
         super(formResult,self).__init__(*args, **kwargs)
         if carrera is not None:
             self.fields['name'].initial =  carrera.name
-        self.fields['runners'].initial = request.user.runners
+        # self.fields['runners'].initial = request.user.runners
 
     # Si la carrera seleccionada no está activa, mensaje de error
 
@@ -35,9 +35,3 @@ class formResult(forms.ModelForm):
         if carrera_activa.objects.get(name=name).status==False:
             raise forms.ValidationError("Para la carrera seleccionada no se puede modificar la posición")
         return name
-
-    # def clean_runners(self):
-    #     runners=self.cleaned_data.get('runners')
-    #     if self.request.user.runners != runners:
-    #         raise forms.ValidationError("No puede modificar la posición de otro runner")
-    #     return runners

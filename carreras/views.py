@@ -6,7 +6,8 @@ from django.urls import reverse,reverse_lazy
 from .forms import formResult
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-
+from django.db import IntegrityError
+from django.http import HttpResponse
 
 # Create your views here.
 
@@ -38,10 +39,6 @@ class IndividualCreate(CreateView):
     model = individual
     form_class = formResult
 
-    def get_object(self):
-        individual, created = Individual.objects.get_or_create(runners=self.request.user.runners)
-        return individual
-
     def get_success_url(self):
         return reverse_lazy('general') + '?registered'
 
@@ -49,4 +46,14 @@ class IndividualCreate(CreateView):
         kwargs = super(IndividualCreate, self).get_form_kwargs()
         kwargs.update({'request': self.request})
         return kwargs
+        
+    def form_valid(self, form):
+        form.instance.runners=self.request.user.runners
+        try:
+            return super().form_valid(form)
+        except IntegrityError:
+            int_mess= "Ya existe una posición para este Runner"
+            return render(self.request, 'carreras\individual_form.html', {'form': form, 'int_mess' : int_mess})
+        
+        form.save()
 

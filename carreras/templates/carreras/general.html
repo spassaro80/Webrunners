@@ -15,11 +15,12 @@
 
 <!-- Mensaje si se acaba de actualizar la posición correctamente -->
 
-{% if 'registered' in request.GET %}
+{% if 'registered' in request.GET or 'updated' in request.GET %}
 <div class="alert alert-success" role="alert">
 Posición actualizada correctamente. <b>Ya puedes ver tu nueva posición en la clasificación</b>
 </div>
 {% endif %}
+
     <!-- Pié de página -->
     <footer>
       <div class="container-fluid">

@@ -1,5 +1,6 @@
 from .models import individual,carrera_activa
 from django import forms
+from django.shortcuts import render, get_object_or_404
 
 class formResult(forms.ModelForm):
     class Meta:
@@ -21,7 +22,7 @@ class formResult(forms.ModelForm):
     # Se pasa el valor request cambiando el kwargs en la vista y se usa el request.user en el form 
 
     def __init__(self,*args, **kwargs):
-        carrera=carrera_activa.objects.get(status=True)
+        carrera=get_object_or_404(carrera_activa,status=True)
         request=kwargs.pop("request")
         super(formResult,self).__init__(*args, **kwargs)
         if carrera is not None:

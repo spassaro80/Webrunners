@@ -8,4 +8,5 @@ urlpatterns = [
     path('resultados/general/', views.general, name="general"),
     path('resultados/equipos/', views.equipos, name="equipos"),
     path('resultados/miposicion/', views.IndividualCreate.as_view(), name="miposicion"),
+    path('resultados/miposicion/update', views.IndividualUpdate.as_view(), name="cambia_posicion"),
 ]

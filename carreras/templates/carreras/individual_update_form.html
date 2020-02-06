@@ -19,14 +19,14 @@
       <div class="col-md-9 mx-auto">
         {% if int_mess %}
           <div class="alert alert-warning" role="alert">
-            Para este Runner ya ha introducido una posición. Si quiere modificarla haga click <a href="{% url 'cambia_posicion' %}"> aquí </a>
+            Para este Runner ya ha introducido una posición. Si quiere modificarla haga click <a href="{% url 'cambia_posicion'}"> aquí </a>
             </div>
         {% endif %}
         <div>
             <form action="" method="post">{% csrf_token %}
                     {{ form.as_p }}
               <div class=text-center>
-                <input type="submit" class= "btn btn-primary btn-block" value="Registrar posición en carrera" />
+                <input type="submit" class= "btn btn-primary btn-block" value="Modificar posición en carrera" />
               </div>
             </form>
         </div>

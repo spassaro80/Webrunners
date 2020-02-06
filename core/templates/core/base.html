@@ -35,9 +35,11 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'equipos'%}">Clasificación por equipo</a>
             </li>
+            {%if carrera_activa %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'miposicion'%}">Mi posición</a>
             </li>
+            {% endif %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'cursas'%}">Carreras</a>
             <li class="nav-item">

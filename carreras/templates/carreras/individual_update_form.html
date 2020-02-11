@@ -17,11 +17,6 @@
   <div class="container">
     <div class="row mt-3 mb-5">
       <div class="col-md-9 mx-auto">
-        {% if int_mess %}
-          <div class="alert alert-warning" role="alert">
-            Para este Runner ya ha introducido una posición. Si quiere modificarla haga click <a href="{% url 'cambia_posicion'}"> aquí </a>
-            </div>
-        {% endif %}
         <div>
             <form action="" method="post">{% csrf_token %}
                     {{ form.as_p }}

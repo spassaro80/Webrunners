@@ -23,34 +23,38 @@
     <!-- Navegación -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div class="container">
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menú
           <i class="fa fa-bars"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
+          <ul class="navbar-nav mr-auto">
             <li class="nav-item">
               <a class="nav-link" href="{% url 'general'%}">Clasificación General</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'equipos'%}">Clasificación por equipo</a>
             </li>
-            {%if carrera_activa %}
+         {%if carrera_activa %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'miposicion'%}">Mi posición</a>
             </li>
             {% endif %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'cursas'%}">Carreras</a>
-            <li class="nav-item">
-              {% if not request.user.is_authenticated %}
-              <a class="nav-link" href="{% url 'login'%}">Login</a>
-              {% else %}
-              <a class="nav-link" href="{% url 'logout'%}">Salir</a>
-
-              <a class="nav-link" href="{% url 'profile'%}">Perfil</a>
-              {% endif %}
             </li>
+          {% if not request.user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login'%}">Login</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout'%}">Salir</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'profile'%}">Perfil</a>
+            </li>
+          {% endif %}
           </ul>
         </div>
       </div>

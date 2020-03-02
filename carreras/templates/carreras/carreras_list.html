@@ -15,17 +15,17 @@
 
 {%block content %}
 
-{% for cursa in cursas %}
+{% for carrera in carreras_list %}
 <div class="container">
     <div class="row">  
 		<div class="col-lg-3 col-md-4 offset-lg-1">
-			<img class="img-fluid" src="{{cursa.image.url}}" alt="">
+			<img class="img-fluid" src="{{carrera.image.url}}" alt="">
 	    	</div> 
 		<div class="col-lg-7 col-md-8">
-	    	<h2 class="section-heading title">{{cursa.name}}</h2>
-			<h3 >{{cursa.date |date:"d M, Y"}}</h3>   
-	    	<p>{{cursa.description}}</p>
-			<p><a href= "{% url 'resultados' cursa.id %}" class="link">Resultados</a> </p>
+	    	<h2 class="section-heading title">{{carrera.name}}</h2>
+			<h3 >{{carrera.date |date:"d M, Y"}}</h3>   
+	    	<p>{{carrera.description}}</p>
+			<p><a href= "{% url 'resultados' carrera.id %}" class="link">Resultados</a> </p>
         	</div>
 		</div> 
 	</div>

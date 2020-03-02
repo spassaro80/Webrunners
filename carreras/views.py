@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from .models import runners,equipo,individual,carreras,carrera_activa
 from django.db.models import Sum
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView,UpdateView
 from django.urls import reverse,reverse_lazy
 from .forms import formResult
@@ -10,34 +12,74 @@ from django.db import IntegrityError
 
 # Create your views here.
 
-@login_required
-def cursas(request):
-    cursas=carreras.objects.all()
-    activa=carrera_activa.objects.filter(status=True)
-    return render(request, 'carreras\carreras.html',{'cursas':cursas, 'carrera_activa': activa})
+@method_decorator(login_required, name='dispatch')
+class CarrerasListView(ListView):
+    model = carreras
+    
+    def activa(self):
+        return carrera_activa.objects.filter(status=True)
 
-@login_required
-def resultados(request,carreras_id):
-    nombres=runners.objects.all()
-    equipos=equipo.objects.all()
-    carrera=carreras.objects.get(id=carreras_id)
-    resultados=individual.objects.filter(name=carrera)
-    activa=carrera_activa.objects.filter(status=True)
-    return render(request, 'carreras\individual.html',{'nombres':nombres,'equipo': equipos, 'datos_carreras':carrera, 'resultados': resultados, 'carrera_activa': activa })
+#Trying to refactor to a DetailView
 
-@login_required
-def general(request):
-    resultados=runners.objects.annotate(tot_score = Sum('individual__score')).order_by('-tot_score')
-    activa=carrera_activa.objects.filter(status=True)    
-    return render(request, 'carreras\general.html',{'resultados': resultados, 'carrera_activa': activa })
+@method_decorator(login_required, name='dispatch')
+class CarrerasResultsDetailView(DetailView):
+    model = carreras
+    template_name = 'carreras/individual.html'
+    context_object_name="resultados"
 
-@login_required
-def equipos(request):
-    resultados_equipos=equipo.objects.annotate(tot_score = Sum('runners__individual__score')).order_by('-tot_score')
-    activa=carrera_activa.objects.filter(status=True)    
-    return render(request, 'carreras\equipos.html',{'resultados_equipos': resultados_equipos, 'carrera_activa': activa})
+    def get_object(self, queryset=None):
+        pk = self.kwargs.get(self.pk_url_kwarg)
+        carrera=carreras.objects.get(id=pk)
+        resultados=individual.objects.filter(name=carrera)
+        return resultados
 
-# Vistas para gestionar las posiciones de un Runner en la clasificación
+    def datos_carreras(self):
+        return carreras.objects.get(id=self.kwargs['pk'])
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['datoscarreras']=carreras.objects.get(id=self.kwargs['pk'])
+        return context
+
+    def activa(self):
+        return carrera_activa.objects.filter(status=True)
+
+
+# @login_required
+# def resultados(request,carreras_id):
+#     nombres=runners.objects.all()
+#     equipos=equipo.objects.all()
+#     carrera=carreras.objects.get(id=carreras_id)
+#     resultados=individual.objects.filter(name=carrera)
+#     activa=carrera_activa.objects.filter(status=True)
+#     return render(request, 'carreras/individual.html',{'nombres':nombres,'equipo': equipos, 'datos_carreras':carrera, 'resultados': resultados, 'carrera_activa': activa })
+
+@method_decorator(login_required, name='dispatch')
+class RunnersClassificationListView(ListView):
+    model = runners
+    template_name="carreras/general.html"
+    context_object_name="resultados"
+    
+    def get_queryset(self):
+        resultados=runners.objects.annotate(tot_score = Sum('individual__score')).order_by('-tot_score')
+        return resultados
+    
+    def activa(self):
+        return carrera_activa.objects.filter(status=True)
+
+@method_decorator(login_required, name='dispatch')
+class TeamsClassificationListView(ListView):
+    model = runners
+    template_name="carreras/equipos.html"
+    context_object_name="resultados_equipos"
+
+    def get_queryset(self):
+        resultados_equipos=equipo.objects.annotate(tot_score = Sum('runners__individual__score')).order_by('-tot_score')
+        return resultados_equipos
+    
+    def activa(self):
+        return carrera_activa.objects.filter(status=True)
+
 
 @method_decorator(login_required, name='dispatch')
 class IndividualCreate(CreateView):
@@ -58,7 +100,7 @@ class IndividualCreate(CreateView):
             return super().form_valid(form)
         except IntegrityError:
             int_mess= "Ya existe una posición para este Runner"
-            return render(self.request, 'carreras\individual_form.html', {'form': form, 'int_mess' : int_mess})
+            return render(self.request, 'carreras/individual_form.html', {'form': form, 'int_mess' : int_mess})
         
         form.save()
 

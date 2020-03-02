@@ -30,29 +30,31 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
+              <a class="nav-link" href="{% url 'carreras'%}">Carreras</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="{% url 'general'%}">Clasificación General</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'equipos'%}">Clasificación por equipo</a>
             </li>
-         {%if carrera_activa %}
+         {%if view.activa %}
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'miposicion'%}">Mi posición</a>
+              <a class="nav-link" href="{% url 'miposicion'%}">Registrar posición</a>
             </li>
-            {% endif %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'cursas'%}">Carreras</a>
-            </li>
+          {% endif %}
+          </ul>
+          <ul class="navbar-nav navbar-right">
           {% if not request.user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'login'%}">Login</a>
             </li>
           {% else %}
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'logout'%}">Salir</a>
+              <a class="nav-link" href="{% url 'profile'%}">Perfil</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'profile'%}">Perfil</a>
+              <a class="nav-link" href="{% url 'logout'%}">Salir</a>
             </li>
           {% endif %}
           </ul>

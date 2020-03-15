@@ -19,12 +19,15 @@ from core import views
 from carreras import views
 from django.conf import settings
 from profiles.urls import profiles_patterns
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('', include('core.urls')),
     path('', include('carreras.urls')),
     path('profiles/', include(profiles_patterns)),
+    # # add this path
+    path('accounts/password_reset/', auth_views.PasswordResetView.as_view(html_email_template_name='registration/password_reset_email.html')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('registration.urls')),
 ]

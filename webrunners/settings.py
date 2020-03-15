@@ -25,7 +25,7 @@ SECRET_KEY = 'stllly+pgtj#f3qdgi^(q0-_4se*e%$2^&u33dvfglsa65kc4g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -131,5 +131,24 @@ MEDIA_ROOT = os.path.join(BASE_DIR,"media")
 
 # Redirect pages after login 
 
-LOGIN_REDIRECT_URL='cursas'
-LOGOUT_REDIRECT_URL='cursas'
+LOGIN_REDIRECT_URL='carreras'
+LOGOUT_REDIRECT_URL='carreras'
+
+#Email Configuration
+####################
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# Host for sending e-mail.
+EMAIL_HOST = "smtp.gmail.com"
+
+# Port for sending e-mail.
+EMAIL_PORT = 587
+
+# Optional SMTP authentication information for EMAIL_HOST.
+EMAIL_HOST_USER = 'stefano.passaro@gmail.com'
+EMAIL_HOST_PASSWORD = 'bnanakvetamnyxtn'
+EMAIL_USE_TLS = True
+
+####################
+#End of Email Configuration

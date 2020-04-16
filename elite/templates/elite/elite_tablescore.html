@@ -1,0 +1,73 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}  Grupo Elite   {% endblock %} 
+
+{% block subtitle %} Mejores marcas en {{request.GET.q }}Km                      {%endblock%}
+    
+
+  <!-- Cabecera -->
+
+<!-- Cambiar la foto en función de si es 10k, 21k o 42k -->
+
+{% block bigphoto %} 
+  {% if request.GET.q == '10' %}
+    url('{% static 'core/img/cursamerce2.jpg' %}')    
+  {% elif request.GET.q == '21' %}
+    url('{% static 'core/img/Mitja.jpg' %}')
+  {% elif request.GET.q == '42' %}
+    url('{% static 'core/img/Maraton.jpg' %}')
+  {% endif %}
+{%endblock%}
+
+{% block content %}
+
+    <!-- Pié de página -->
+    <footer>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+<table class="table">
+  <thead class="text-white bg-info">
+    <tr>
+      <th scope="col">Ranking</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Apellido</th>
+      <th scope="col">Equipo</th>
+      <th scope="col">Marca</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for item in object_list %}
+      {% comment %} {% if item.user.profile.best10km  or item.user.profile.best21km or item.user.profile.best42km %} {% endcomment %}
+        <tr bgcolor="{{item.team.color}}" {% if item.team.color == "black" or item.team.color == "red" %} style=color:white {% endif %}>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{item.name}}</td>
+          <td>{{item.surname}}</td>
+          <td>{{item.team}}</td>
+          {% if request.GET.q == '10'%}
+            <td>{{item.user.profile.best10km|time:"i\m s\s"}}</td>
+          {% elif request.GET.q == '21' %}
+            <td>{{item.user.profile.best21km|time:"H\h i\m s\s"}}</td>
+          {% elif request.GET.q == '42' %}
+            <td>{{item.user.profile.best42km|time:"H\h i\m s\s"}}</td>
+          {% else %}
+            <td>N/A</td>
+          {% endif %}
+        </tr>
+      {% comment %} {% endif %} {% endcomment %}
+    {% endfor %}
+
+  </tbody>
+</table>
+       <p class="copyright text-muted">Copyright &copy; 2019 · Stefano </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+
+{% endblock %} 
+
+

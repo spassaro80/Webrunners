@@ -1,0 +1,83 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}  Grupo Elite   {% endblock %} 
+
+{% block subtitle %} Grupo Elite {%endblock%}
+    
+
+  <!-- Cabecera -->
+
+{% block bigphoto %}     url('{% static 'core/img/Eliud.jpg' %}')    {%endblock%}
+
+
+{% block content %}
+
+
+
+    <!-- Pié de página -->
+<div class= "container">
+    <div class="row">
+      <div class="col-md-4 mb-3">
+          <div class="card">
+            <img class="card-img-top" id="elitecard" src="{% static 'core/img/cursamerce2.jpg' %}">
+              <div class="card-body">
+                <h5 class="card-title">10 Km</h5>
+                <p class="card-text">Las mejores marcas de todos los tiempos del grupo Elite en la carrera de 10 Km.</p>
+                <a href="{% url 'elite:best' %}?q=10" class="btn btn-success btn-sm rounded" id="btnsm">Ver Marcas</a>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-4 mb-3">
+          <div class="card">
+            <img class="card-img-top" id="elitecard" src="{% static 'core/img/Mitja.jpg' %}">
+              <div class="card-body">
+                <h5 class="card-title">Media Maratón</h5>
+                <p class="card-text">Las mejores marcas de todos los tiempos del grupo Elite en la Media Maratón.</p>
+                <a href="{% url 'elite:best' %}?q=21" class="btn btn-success btn-sm rounded" id="btnsm">Ver Marcas</a>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-4 mb-3">
+          <div class="card">
+            <img class="card-img-top" id="elitecard" src="{% static 'core/img/Maraton.jpg' %}">
+              <div class="card-body">
+                <h5 class="card-title">Maratón</h5>
+                <p class="card-text">Las mejores marcas de todos los tiempos del grupo Elite en la Maratón.</p>
+                <a href="{% url 'elite:best' %}?q=21" class="btn btn-success btn-sm rounded" id="btnsm">Ver Marcas</a>
+              </div>
+          </div>
+      </div>
+
+    </div>
+</div>
+
+    {% comment %} <div class="container-fluid">      
+     
+        <div class="row">
+          <div class="col-lg-4 col-sm-6">
+            <div class="pt-3 pt-lg-1">
+              <img src="https://source.unsplash.com/xv4L_bb0Z_8" class="img-fluid image">
+            </div>
+         </div>
+          <div class="col-lg-4 col-sm-6">
+            <div class="pt-3 pt-lg-1">
+              <img src="https://source.unsplash.com/pM9p3StkknY" class="img-fluid image">
+            </div>
+         </div>
+          <div class="col-lg-4 col-sm-6">
+            <div class="pt-3 pt-lg-1">
+              <img src="https://source.unsplash.com/x5GcXFvJJhI" class="img-fluid image">
+            </div>
+          </div>
+        </div>
+    </div> {% endcomment %}
+
+  <footer>
+  <p class="copyright text-muted">Copyright &copy; 2020 · Stefano </p>
+  </footer>
+
+
+{% endblock %} 
+
+

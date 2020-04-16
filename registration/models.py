@@ -17,6 +17,14 @@ class Profile(models.Model):
     bio=models.TextField(null=True, blank=True)
     link=models.URLField(max_length=200, null=True, blank=True)
     avatar=models.ImageField(upload_to='custom_upload_to', null=True, blank=True)
+    best10km=models.TimeField(null=True, blank=True, verbose_name="Mejor marca 10km")
+    best21km=models.TimeField(null=True, blank=True, verbose_name="Mejor marca 21km")
+    best42km=models.TimeField(null=True, blank=True, verbose_name="Mejor marca 42km")
+    class Meta:
+        verbose_name = 'Perfil de usuario'
+        verbose_name_plural = 'Perfiles de usuario'
+    def __str__(self):
+        return self.user.username
 
     class Meta:
         ordering = ['user__username']

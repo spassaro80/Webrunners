@@ -1,9 +1,9 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
-{% block title %}        {% endblock %} 
+{% block title %} Runners Barceloneta  {% endblock %} 
 
-{% block subtitle %}   {%endblock%}
+{% block subtitle %}  2019-2020	 {%endblock%}
     
 
   <!-- Cabecera -->
@@ -17,7 +17,7 @@
 
 {% for carrera in carreras_list %}
 <div class="container">
-    <div class="row">  
+    <div class="row my-3">  
 		<div class="col-lg-3 col-md-4 offset-lg-1">
 			<img class="img-fluid" src="{{carrera.image.url}}" alt="">
 	    	</div> 

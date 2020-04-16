@@ -18,9 +18,6 @@ class CarrerasListView(ListView):
     
     def activa(self):
         return carrera_activa.objects.filter(status=True)
-
-#Trying to refactor to a DetailView
-
 @method_decorator(login_required, name='dispatch')
 class CarrerasResultsDetailView(DetailView):
     model = carreras
@@ -43,17 +40,6 @@ class CarrerasResultsDetailView(DetailView):
 
     def activa(self):
         return carrera_activa.objects.filter(status=True)
-
-
-# @login_required
-# def resultados(request,carreras_id):
-#     nombres=runners.objects.all()
-#     equipos=equipo.objects.all()
-#     carrera=carreras.objects.get(id=carreras_id)
-#     resultados=individual.objects.filter(name=carrera)
-#     activa=carrera_activa.objects.filter(status=True)
-#     return render(request, 'carreras/individual.html',{'nombres':nombres,'equipo': equipos, 'datos_carreras':carrera, 'resultados': resultados, 'carrera_activa': activa })
-
 @method_decorator(login_required, name='dispatch')
 class RunnersClassificationListView(ListView):
     model = runners
@@ -117,17 +103,10 @@ class IndividualUpdate(UpdateView):
         kwargs = super(IndividualUpdate, self).get_form_kwargs()
         kwargs.update({'request': self.request})
         return kwargs
-    
-    # def form_valid(self, form):
-    #     form.instance.runners=self.request.user.runners
-    #     try:
-    #         return super().form_valid(form)
-    #     except IntegrityError:
-    #         int_mess= "Ya existe una posición para este Runner"
-    #         return render(self.request, 'carreras\individual_form.html', {'form': form, 'int_mess' : int_mess})
-        
-    #     form.save()
+
     def get_object(self, queryset=None):
         carrera=carrera_activa.objects.get(status=True)
         return get_object_or_404(individual, name=carrera.name, runners=self.request.user.runners )
+
+
 

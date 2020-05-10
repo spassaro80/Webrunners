@@ -36,6 +36,12 @@ class runners(models.Model):
     def __str__(self):
         return self.name +  " " + self.surname
 
+    def is_elite(self):
+        if self.user.profile.best10km and self.user.profile.best21km == None and self.user.profile.best42km == None:
+            return False
+        return True
+        
+
         
 class carreras(models.Model):
     name=models.CharField(verbose_name="Nombre", max_length=100, unique_for_date="date",null=False)

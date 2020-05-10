@@ -22,52 +22,69 @@
 
 {% block content %}
 
-    <!-- Pié de página -->
-    <footer>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-8 col-md-10 mx-auto">
-<table class="table">
-  <thead class="text-white bg-info">
-    <tr>
-      <th scope="col">Ranking</th>
-      <th scope="col">Nombre</th>
-      <th scope="col">Apellido</th>
-      <th scope="col">Equipo</th>
-      <th scope="col">Marca</th>
-    </tr>
-  </thead>
+<!-- Call DataTables function e inicialización en Castellano-->
 
-  <tbody>
-    {% for item in object_list %}
-      {% comment %} {% if item.user.profile.best10km  or item.user.profile.best21km or item.user.profile.best42km %} {% endcomment %}
-        <tr bgcolor="{{item.team.color}}" {% if item.team.color == "black" or item.team.color == "red" %} style=color:white {% endif %}>
-          <th scope="row">{{forloop.counter}}</th>
-          <td>{{item.name}}</td>
-          <td>{{item.surname}}</td>
-          <td>{{item.team}}</td>
-          {% if request.GET.q == '10'%}
-            <td>{{item.user.profile.best10km|time:"i\m s\s"}}</td>
-          {% elif request.GET.q == '21' %}
-            <td>{{item.user.profile.best21km|time:"H\h i\m s\s"}}</td>
-          {% elif request.GET.q == '42' %}
-            <td>{{item.user.profile.best42km|time:"H\h i\m s\s"}}</td>
-          {% else %}
-            <td>N/A</td>
-          {% endif %}
-        </tr>
-      {% comment %} {% endif %} {% endcomment %}
-    {% endfor %}
 
-  </tbody>
-</table>
-       <p class="copyright text-muted">Copyright &copy; 2019 · Stefano </p>
-          </div>
-        </div>
-      </div>
-    </footer>
+{% include 'elite/includes/DataTablesOptions.html'%}
+
+
+<!-- Fin de Call DataTables function-->
+
+
+<!-- Visualización de la Tabla de clasificación -->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+      <table class="table" id="myTable" data-paging = 'false'>
+        <thead class="text-white bg-info">
+          <tr id="centered">
+            <th scope="col" class="d-none d-sm-table-cell">Ranking</th>
+            <th scope="col" class="d-none d-sm-table-cell">Nombre</th>
+            <th scope="col" class="d-none d-sm-table-cell">Apellido</th>
+            <th scope="col" class="d-none d-sm-table-cell">Marca</th>
+            <th scope="col" class="d-none d-sm-table-cell">Equipo</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in object_list %}
+            {% if item.is_elite == true %}
+              <tr>
+                <th scope="row" id="centered" class="d-none d-sm-table-cell">{{forloop.counter}}</th>
+                  <td scope="row" id="centered">{{item.name}}</td>
+                  <td scope="row" id="centered" class="d-none d-sm-table-cell">{{item.surname}}</td>
+                {% if request.GET.q == '10'%}
+                  <td scope="row" id="centered">{{item.user.profile.best10km|time:"i\m s\s"}}</td>
+                {% elif request.GET.q == '21' %}
+                  <td scope="row" id="centered">{{item.user.profile.best21km|time:"H\h i\m s\s"}}</td>
+                {% elif request.GET.q == '42' %}
+                  <td scope="row" id="centered">{{item.user.profile.best42km|time:"H\h i\m s\s"}}</td>
+                {% else %}
+                  <td>N/A</td>
+                {% endif %}
+                  <td scope="row" id="centered"><i class="fas fa-tshirt team_{{item.team.color}}"></i></td>  <!--T-Shirt color changing depending on the team color--> 
+
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<!-- Fin de Visualización de la Tabla de clasificación -->
+
+<!-- Pié de página -->
+
+<footer>
+  <p class="copyright text-muted">Copyright &copy; 2020 · Stefano </p>
+</footer>
 
 
 {% endblock %} 
+
+
 
 

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import CreateView
+from django.views.generic.list import ListView
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -61,6 +62,11 @@ class EmailUpdate(UpdateView):
         form.fields['email'].label = ''
         form.fields['email'].help_text = ''
         return form
+
+@method_decorator(login_required, name='dispatch')
+class ProfileListView(ListView):
+    model=Profile
+    template_name = 'registration/profile_list.html'
 
 
 

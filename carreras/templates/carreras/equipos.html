@@ -12,39 +12,51 @@
 
 
 {% block content %}
-    <!-- Pié de página -->
-    <footer>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-8 col-md-10 mx-auto">
-<table class="table">
-  <thead class="text-white bg-info">
-    <tr>
-      <th scope="col">Posición</th>
-      <th scope="col">Equipo</th>
-      <th scope="col">Puntos</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for item in resultados_equipos %}
-    {% if item.tot_score is not None %}
-    <tr bgcolor="{{item.color}}" {% if item.color == "black" or item.color == "red" %} style=color:white {% endif %}>
-      <th scope="row">{{forloop.counter}}</th>
-      <td>{{item.name}}</td>
-      <td>{{item.tot_score}}</td>
-    </tr>
-    {% endif %}
-    {% endfor %}
 
-  </tbody>
-</table>
-       <p class="copyright text-muted">Copyright &copy; 2019 · Stefano </p>
-          </div>
-        </div>
-      </div>
-    </footer>
+<!-- Call DataTables function e inicialización en Castellano-->
+
+{% include 'carreras/includes/DataTablesOptions.html'%}
+
+<!-- Fin de Call DataTables function-->
+
+
+<!-- Visualización de la Tabla de clasificación -->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+      <table class="table" id="myTable">
+        <thead class="text-white bg-info">
+          <tr id="centered">
+            <th scope="col">Posición</th>
+            <th scope="col">Equipo</th>
+            <th scope="col">Puntos</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in resultados_equipos %}
+            {% if item.tot_score is not None %}
+              <th scope="row" id="centered">{{forloop.counter}}</th>
+                <td scope="row" id="centered"><i class="fas fa-tshirt team_{{item.color}}"></i></td>  <!--T-Shirt color changing depending on the team color--> 
+                <td scope="row" id="centered">{{item.tot_score}}</td>
+            </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<!-- Fin de Visualización de la Tabla de clasificación -->
+
+<!-- Pié de página -->
+
+<footer>
+  <p class="copyright text-muted">Copyright &copy; 2020 · Stefano </p>
+</footer>
 
 
 {% endblock %} 
-
 

@@ -12,41 +12,64 @@
 
 
 {% block content %}
-    <!-- Pié de página -->
-    <footer>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-8 col-md-10 mx-auto">
-<table class="table">
-  <thead class="text-white bg-info">
-    <tr>
-      <th scope="col">Posición</th>
-      <th scope="col">Nombre</th>
-      <th scope="col">Apellido</th>
-      <th scope="col">Equipo</th>
-      <th scope="col">Puntos</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for item in resultados %}
-    <tr bgcolor="{{item.runners.team.color}}" {% if item.runners.team.color == "black" or item.runners.team.color == "red" %} style=color:white {% endif %}>
-      <th scope="row">{{item.number}}</th>
-      <td>{{item.runners.name}}</td>
-      <td>{{item.runners.surname}}</td>
-      <td>{{item.runners.team}}</td>
-      <td>{{item.score}}</td>
-    </tr>
-        {% endfor %}
+<!-- Fin del mensaje -->
 
-  </tbody>
-</table>
-       <p class="copyright text-muted">Copyright &copy; 2019 · Stefano </p>
-          </div>
-        </div>
-      </div>
-    </footer>
 
+<!-- Call DataTables function e inicialización en Castellano-->
+
+<script>
+$(document).ready(function() {
+    $('#myTable').DataTable( {
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+        }
+    } );
+} );
+</script>
+
+<!-- Fin de Call DataTables function-->
+
+
+<!-- Visualización de la Tabla de clasificación -->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+      <table class="table" id="myTable">
+        <thead class="text-white bg-info">
+          <tr id="centered">
+            <th scope="col">Posición</th>
+            <th scope="col">Nombre</th>
+            <th scope="col" class="d-none d-sm-table-cell">Apellido</th>
+            <th scope="col">Equipo</th>
+            <th scope="col">Puntos</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in resultados %}
+            {% if item.score is not None %}
+              <th scope="row" id="centered">{{item.number}}</th>
+                <td scope="row" id="centered">{{item.runners.name}}</td>
+                <td scope="row" id="centered" class="d-none d-sm-table-cell">{{item.runners.surname}}</td>
+                <td scope="row" id="centered"><i class="fas fa-tshirt team_{{item.runners.team.color}}"></i></td>  <!--T-Shirt color changing depending on the team color--> 
+                <td scope="row" id="centered">{{item.score}}</td>
+            </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<!-- Fin de Visualización de la Tabla de clasificación -->
+
+<!-- Pié de página -->
+
+<footer>
+  <p class="copyright text-muted">Copyright &copy; 2020 · Stefano </p>
+</footer>
 
 {% endblock %} 
-
 

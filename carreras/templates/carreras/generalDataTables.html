@@ -23,17 +23,21 @@ Posición actualizada correctamente. <b>Ya puedes ver tu nueva posición en la c
 {% endif %}
 
 
-<!-- Fin del mensaje -->
-
-
-<!-- Call DataTables function e inicialización en Castellano-->
-
-{% include 'carreras/includes/DataTablesOptions.html'%}
-
-<!-- Fin de Call DataTables function-->
-
-
 <!-- Visualización de la Tabla de clasificación -->
+
+<!-- Call DataTables function-->
+
+<script>
+$(document).ready(function() {
+    $('#myTable').DataTable( {
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+        }
+    } );
+} );
+</script>
+
+
 
 <div class="container-fluid">
   <div class="row">
@@ -65,8 +69,6 @@ Posición actualizada correctamente. <b>Ya puedes ver tu nueva posición en la c
   </div>
 </div>
 
-
-<!-- Fin de Visualización de la Tabla de clasificación -->
 
 <!-- Pié de página -->
 

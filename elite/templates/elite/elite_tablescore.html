@@ -48,7 +48,6 @@
         </thead>
         <tbody>
           {% for item in object_list %}
-            {% if item.is_elite == true %}
               <tr>
                 <th scope="row" id="centered" class="d-none d-sm-table-cell">{{forloop.counter}}</th>
                   <td scope="row" id="centered">{{item.name}}</td>
@@ -63,9 +62,7 @@
                   <td>N/A</td>
                 {% endif %}
                   <td scope="row" id="centered"><i class="fas fa-tshirt team_{{item.team.color}}"></i></td>  <!--T-Shirt color changing depending on the team color--> 
-
               </tr>
-            {% endif %}
           {% endfor %}
         </tbody>
       </table>
